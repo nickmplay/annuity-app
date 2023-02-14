@@ -17,7 +17,8 @@ ui <- fluidPage(
 
         # Show a plot of the iris species by petal length and width
         mainPanel(
-           plotOutput("distPlot")
+           plotOutput("distPlot1"),
+           plotOutput("distPlot2")
         )
     )
 )
@@ -25,9 +26,10 @@ ui <- fluidPage(
 # Define server logic required to draw a plot
 server <- function(input, output) {
 
-    output$distPlot <- renderPlot({
+    output$distPlot1 <- renderPlot({
       # generate empty plot
       plot(1, type = "n", 
+           main = "Petal iris data",
            xlab = "Petal Length", ylab = "Petal Width", 
            xlim = c(0, 7), ylim = c(0, 3))
       
@@ -41,7 +43,25 @@ server <- function(input, output) {
                col = iris_cols[[i]], 
                pch = 16)
       }
+    })
+    
+    output$distPlot2 <- renderPlot({
+      # generate empty plot
+      plot(1, type = "n", 
+           main = "Sepal iris data",
+           xlab = "Sepal Length", ylab = "Sepal Width", 
+           xlim = c(4, 8), ylim = c(0, 5))
       
+      # define colour mapping
+      iris_cols <- c("setosa" = 1, "versicolor" = 2, "virginica" = 3)
+      
+      # loop selection and add points to plot
+      for(i in input$species_selection){
+        points(iris[iris$Species == i, "Sepal.Length"], 
+               iris[iris$Species == i, "Sepal.Width"], 
+               col = iris_cols[[i]], 
+               pch = 15)
+      }
     })
 }
 
