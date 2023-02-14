@@ -2,20 +2,21 @@
 library(shiny)
 
 # load prepared data
-df = read.csv("iris.csv")
+df = read.csv("annuities.csv")
+colnames(df)[1] <- gsub('^...','',colnames(df)[1])
 
 # Define UI for application that draws a plot
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Iris petal data"),
+    titlePanel("Reinsurer Comparison"),
 
     # Sidebar with a slider input for iris species
     sidebarLayout(
         sidebarPanel(
-            selectInput("species_selection", "Species", 
+            selectInput("ri_selection", "Reinsurer", 
                         multiple = T,
-                        choices = unique(df$Species))
+                        choices = unique(df$Reinsurer))
         ),
 
         # Show a plot of the iris species by petal length and width
@@ -32,40 +33,42 @@ server <- function(input, output) {
     output$distPlot1 <- renderPlot({
       # generate empty plot
       plot(1, type = "n", 
-           main = "Petal iris data",
-           xlab = "Petal Length", ylab = "Petal Width", 
-           xlim = c(0, 7), ylim = c(0, 3))
+           main = "Male annuities",
+           xlab = "Age", ylab = "% BEL", 
+           xlim = c(50, 80), ylim = c(-0.02, 0.09))
       
       # define colour mapping
-      df_cols <- c("setosa" = 1, "versicolor" = 2, "virginica" = 3)
+      df_cols <- c("R1" = 1, "R2" = 2)
       
       # loop selection and add points to plot
-      for(i in input$species_selection){
-        points(df[df$Species == i, "Petal.Length"], 
-               df[df$Species == i, "Petal.Width"], 
+      df_s <- df[df$Sex == "Male", ]
+      for(i in input$ri_selection){
+        lines(df_s[df_s$Reinsurer == i, "Age"], 
+               df_s[df_s$Reinsurer == i, "Value"], 
                col = df_cols[[i]], 
                pch = 16)
       }
-    })
+    }, height = 450, width = 700)
     
     output$distPlot2 <- renderPlot({
       # generate empty plot
       plot(1, type = "n", 
-           main = "Sepal iris data",
-           xlab = "Sepal Length", ylab = "Sepal Width", 
-           xlim = c(4, 8), ylim = c(0, 5))
+           main = "Female annuities",
+           xlab = "Age", ylab = "% BEL", 
+           xlim = c(50, 80), ylim = c(-0.02, 0.09))
       
       # define colour mapping
-      df_cols <- c("setosa" = 1, "versicolor" = 2, "virginica" = 3)
+      df_cols <- c("R1" = 1, "R2" = 2)
       
       # loop selection and add points to plot
-      for(i in input$species_selection){
-        points(df[df$Species == i, "Sepal.Length"], 
-               df[df$Species == i, "Sepal.Width"], 
+      df_s <- df[df$Sex == "Female", ]
+      for(i in input$ri_selection){
+        lines(df_s[df_s$Reinsurer == i, "Age"], 
+               df_s[df_s$Reinsurer == i, "Value"], 
                col = df_cols[[i]], 
                pch = 15)
       }
-    })
+    }, height = 450, width = 700)
 }
 
 # Run the application 
