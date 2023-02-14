@@ -1,6 +1,9 @@
 
 library(shiny)
 
+# load prepared data
+df = read.csv("iris.csv")
+
 # Define UI for application that draws a plot
 ui <- fluidPage(
 
@@ -12,7 +15,7 @@ ui <- fluidPage(
         sidebarPanel(
             selectInput("species_selection", "Species", 
                         multiple = T,
-                        choices = c("setosa", "versicolor", "virginica"))
+                        choices = unique(df$Species))
         ),
 
         # Show a plot of the iris species by petal length and width
@@ -34,13 +37,13 @@ server <- function(input, output) {
            xlim = c(0, 7), ylim = c(0, 3))
       
       # define colour mapping
-      iris_cols <- c("setosa" = 1, "versicolor" = 2, "virginica" = 3)
+      df_cols <- c("setosa" = 1, "versicolor" = 2, "virginica" = 3)
       
       # loop selection and add points to plot
       for(i in input$species_selection){
-        points(iris[iris$Species == i, "Petal.Length"], 
-               iris[iris$Species == i, "Petal.Width"], 
-               col = iris_cols[[i]], 
+        points(df[df$Species == i, "Petal.Length"], 
+               df[df$Species == i, "Petal.Width"], 
+               col = df_cols[[i]], 
                pch = 16)
       }
     })
@@ -53,13 +56,13 @@ server <- function(input, output) {
            xlim = c(4, 8), ylim = c(0, 5))
       
       # define colour mapping
-      iris_cols <- c("setosa" = 1, "versicolor" = 2, "virginica" = 3)
+      df_cols <- c("setosa" = 1, "versicolor" = 2, "virginica" = 3)
       
       # loop selection and add points to plot
       for(i in input$species_selection){
-        points(iris[iris$Species == i, "Sepal.Length"], 
-               iris[iris$Species == i, "Sepal.Width"], 
-               col = iris_cols[[i]], 
+        points(df[df$Species == i, "Sepal.Length"], 
+               df[df$Species == i, "Sepal.Width"], 
+               col = df_cols[[i]], 
                pch = 15)
       }
     })
