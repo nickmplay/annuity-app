@@ -1,21 +1,41 @@
-﻿"Reinsurer","Sex","Age","Value"
-R1,Male,50,0.01
-R1,Male,60,0.02
-R1,Male,70,0.03
-R1,Male,80,0.04
-R1,Male,90,0.01
-R1,Female,50,0.07
-R1,Female,60,0.08
-R1,Female,70,0.01
-R1,Female,80,0.02
-R1,Female,90,0.01
-R2,Male,50,0.05
-R2,Male,60,0.04
-R2,Male,70,0.03
-R2,Male,80,-0.01
-R2,Male,90,0.01
-R2,Female,50,-0.02
-R2,Female,60,0.01
-R2,Female,70,0
-R2,Female,80,0.02
-R2,Female,90,-0.02
+Reinsurer,Sex,Age,Deal,Value
+McDonald Re,Male,50,Hawk,0.01
+McDonald Re,Male,60,Hawk,0.02
+McDonald Re,Male,70,Hawk,0.03
+McDonald Re,Male,80,Hawk,0.04
+McDonald Re,Male,90,Hawk,0.01
+McDonald Re,Female,50,Hawk,0.07
+McDonald Re,Female,60,Hawk,0.08
+McDonald Re,Female,70,Hawk,0.01
+McDonald Re,Female,80,Hawk,0.02
+McDonald Re,Female,90,Hawk,0.01
+RGB,Male,50,Hawk,0.05
+RGB,Male,60,Hawk,0.04
+RGB,Male,70,Hawk,0.03
+RGB,Male,80,Hawk,-0.01
+RGB,Male,90,Hawk,0.01
+RGB,Female,50,Hawk,-0.02
+RGB,Female,60,Hawk,0.01
+RGB,Female,70,Hawk,0
+RGB,Female,80,Hawk,0.02
+RGB,Female,90,Hawk,-0.02
+McDonald Re,Male,50,Cardamom,0.02
+McDonald Re,Male,60,Cardamom,0.01
+McDonald Re,Male,70,Cardamom,0.01
+McDonald Re,Male,80,Cardamom,0.01
+McDonald Re,Male,90,Cardamom,0.04
+McDonald Re,Female,50,Cardamom,-0.01
+McDonald Re,Female,60,Cardamom,0.02
+McDonald Re,Female,70,Cardamom,-0.01
+McDonald Re,Female,80,Cardamom,0.02
+McDonald Re,Female,90,Cardamom,0
+MetDeath,Male,50,Cardamom,0.03
+MetDeath,Male,60,Cardamom,0.02
+MetDeath,Male,70,Cardamom,0.02
+MetDeath,Male,80,Cardamom,-0.01
+MetDeath,Male,90,Cardamom,-0.02
+MetDeath,Female,50,Cardamom,0.02
+MetDeath,Female,60,Cardamom,0.04
+MetDeath,Female,70,Cardamom,0.02
+MetDeath,Female,80,Cardamom,-0.01
+MetDeath,Female,90,Cardamom,0.03
