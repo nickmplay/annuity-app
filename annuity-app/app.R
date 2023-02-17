@@ -39,11 +39,23 @@ ui <- fluidPage(
         min = 50, value = c(50, 90), max = 90
       ), 
       
-      fluidRow(p(verbatimTextOutput("ri_winner"))),
+      # Stylise text output for ri_winner (CSS in tag$style can be adjusted)
+      fluidRow(
+        textOutput("ri_winner"), 
+        tags$head(
+          tags$style(
+            "#ri_winner{color: black; font-size: 16px; font-style: bold; text-align: center}"
+          )
+        )
+      ),
       
       # debug
-      fluidRow(column(12, verbatimTextOutput("ri_select"))),
-      
+      fluidRow(
+        column(
+          12, 
+          verbatimTextOutput("ri_select")
+          )
+        )
     ),
     
     # Show a side-by-side plot of the annuitants by reinsurer
@@ -114,7 +126,7 @@ server <- function(input, output) {
   })
   
   # winner 
-  output$ri_winner <- renderPrint({
+  output$ri_winner <- renderText({
     age_range <- input$age_selection[1]:input$age_selection[2]
     ri_rank <- aggregate(Value ~ Reinsurer, 
                          df[df$Deal == input$deal_selection & 
