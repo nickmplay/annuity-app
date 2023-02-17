@@ -27,12 +27,18 @@ ui <- fluidPage(
   # Sidebar with a slider input for reinsurer
   sidebarLayout(
     sidebarPanel(
-      selectInput("deal_selection", "Deal", 
-                  choices = unique(df$Deal)),
+      selectInput(
+        "deal_selection", 
+        "Select Deal", 
+        choices = unique(df$Deal)
+      ),
       
-      selectInput("ri_selection", "Reinsurer", 
-                  multiple = T,
-                  choices =  unique(df$Reinsurer)),
+      # Check box input for reinsurer
+      checkboxGroupInput(
+        "ri_selection", 
+        "Select Reinsurer", 
+        choices = unique(df$Reinsurer)
+      ),
       
       sliderInput(
         "age_selection", label = "Age range",
@@ -54,8 +60,8 @@ ui <- fluidPage(
         column(
           12, 
           verbatimTextOutput("ri_select")
-          )
         )
+      )
     ),
     
     # Show a side-by-side plot of the annuitants by reinsurer
