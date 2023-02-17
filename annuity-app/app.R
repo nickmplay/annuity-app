@@ -37,7 +37,7 @@ ui <- fluidPage(
       checkboxGroupInput(
         "ri_selection", 
         "Select Reinsurer", 
-        choices = unique(df$Reinsurer)
+        choices = unique(df$reinsurer)
       ),
       
       sliderInput(
@@ -80,7 +80,21 @@ ui <- fluidPage(
 
 # Define server logic required to draw a plot -----------------------------
 
-server <- function(input, output) {
+server <- function(input, output, session) {
+  
+  # Update the reinsurance selector based on the Deal selection
+  updateReinsurerSelector <- function(session) {
+    choices <- unique(df[df$Deal == input$deal_selection, "Reinsurer"])
+    updateCheckboxGroupInput(
+      session, 
+      inputId = "ri_selection", 
+      label = "Select Reinsurer", 
+      choices = choices,
+      selected = "",
+      inline = FALSE)
+  }
+  
+  observeEvent(input$deal_selection, updateReinsurerSelector(session))
   
   # select reinsurers from selected deal
   output$ri_select <- renderPrint({
