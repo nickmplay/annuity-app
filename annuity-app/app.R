@@ -42,7 +42,7 @@ ui <- fluidPage(
       ),
       
       sliderInput(
-        "age_selection", label = "Age range",
+        "age_selection", label = "Select Age Range",
         min = 50, value = c(50, 90), max = 90
       ), 
       
