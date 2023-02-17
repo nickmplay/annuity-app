@@ -4,6 +4,7 @@
 
 library(shiny)
 library(shinydashboard)
+library(htmltools)
 
 
 # define global variables -------------------------------------------------
@@ -37,7 +38,7 @@ ui <- fluidPage(
       checkboxGroupInput(
         "ri_selection", 
         "Select Reinsurer", 
-        choices = unique(df$reinsurer)
+        choices = unique(df$Reinsurer)
       ),
       
       sliderInput(
@@ -56,12 +57,12 @@ ui <- fluidPage(
       ),
       
       # debug
-      fluidRow(
-        column(
-          12, 
-          verbatimTextOutput("ri_select")
-        )
-      )
+      #fluidRow(
+      #  column(
+      #    12, 
+      #    verbatimTextOutput("ri_select")
+      #  )
+      #)
     ),
     
     # Show a side-by-side plot of the annuitants by reinsurer
@@ -85,13 +86,24 @@ server <- function(input, output, session) {
   # Update the reinsurance selector based on the Deal selection
   updateReinsurerSelector <- function(session) {
     choices <- unique(df[df$Deal == input$deal_selection, "Reinsurer"])
+    # Create colour square based on df_cols using HTML
+    cols <- df_cols[names(df_cols) %in% choices]
+    colour_names <- data.frame(cols)$cols
+    for(i in 1:length(choices)) {
+      html <- paste0("<p style='font-size: 14px; font-style:bold;'>", choices[i], 
+                     "<span style='font-size: 15px; color:", 
+                     colour_names[i], ";'> &#9632;</span></p>") # &#9632; is HTML for a square
+      colour_names[i] <- list(HTML(html))
+    }
     updateCheckboxGroupInput(
       session, 
       inputId = "ri_selection", 
       label = "Select Reinsurer", 
-      choices = choices,
+      choiceValues = choices,
+      choiceNames = colour_names,
       selected = "",
-      inline = FALSE)
+      inline = FALSE
+      )
   }
   
   observeEvent(input$deal_selection, updateReinsurerSelector(session))
@@ -104,6 +116,7 @@ server <- function(input, output, session) {
   # render male plot
   output$distPlot1 <- renderPlot({
     # generate empty plot
+    age_range <- input$age_selection[1]:input$age_selection[2]
     plot(1, type = "n", 
          main = "Male annuities",
          xlab = "Age", ylab = "% BEL", 
@@ -111,7 +124,6 @@ server <- function(input, output, session) {
     
     
     # loop selection and add points to plot
-    age_range <- input$age_selection[1]:input$age_selection[2]
     df_s <- df[df$Sex == "Male" & 
                  df$Deal == input$deal_selection & 
                  df$Age %in% age_range, ]
@@ -157,7 +169,7 @@ server <- function(input, output, session) {
   })
   
   # debugging
-  output$debug <- renderPrint({ input$age_selection })
+  #output$debug <- renderPrint({ input$age_selection })
   
   
 }
