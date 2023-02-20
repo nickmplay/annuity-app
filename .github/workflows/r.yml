@@ -2,7 +2,7 @@ name: Deploy Dashboard to shinyapps.io
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 permissions:
   contents: read
