@@ -28,6 +28,7 @@ jobs:
           APPNAME: annuity-app
           SERVER: shinyapps.io
         run: |
-           rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
-           rsconnect::deployApp(appName = "${{ env.APPNAME }}", account = "${{ secrets.RSCONNECT_USER }}", server = "${{ env.SERVER }}")
+          cd annuity-app/
+          rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
+          rsconnect::deployApp(appName = "${{ env.APPNAME }}", account = "${{ secrets.RSCONNECT_USER }}", server = "${{ env.SERVER }}")
         shell: Rscript {0}
