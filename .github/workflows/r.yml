@@ -1,0 +1,35 @@
+name: Deploy Dashboard to shinyapps.io
+
+on:
+  push:
+    branches: [ "*" ]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-shiny:
+    runs-on: macos-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@main
+      - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-renv@v2
+
+      - name: Install rsconnect
+        run: |
+          R -e 'install.packages("rsconnect")'
+          cp annuity-app/* .
+
+      - name: Deploy to shinyapps.io
+        env:
+          APPNAME: annuity-app
+          SERVER: shinyapps.io
+        run: |
+          rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
+          rsconnect::deployApp(appName = "${{ env.APPNAME }}", account = "${{ secrets.RSCONNECT_USER }}", server = "${{ env.SERVER }}")
+        shell: Rscript {0}
