@@ -6,4 +6,4 @@ different counterparties on the deals that they have quoted on.
 After selecting the deal name, the quoting counterparties can be selected and 
 viewed illustratively to see where each is most competitive. 
 
-The app has been deployed to [here]([http://example.com](https://nickmwip.shinyapps.io/annuity-app/))
+The app has been deployed to [https://nickmwip.shinyapps.io/annuity-app/](https://nickmwip.shinyapps.io/annuity-app/)
